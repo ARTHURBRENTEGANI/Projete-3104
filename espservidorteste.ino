@@ -1,8 +1,8 @@
 #include <WiFi.h>
 
-#define ledvermelho 26
-#define ledverde 12
-#define ledamarelo 13
+#define ledvermelho 32
+#define ledverde 35
+#define ledamarelo 34
 
 String resposta_cliente;
 const char* nome = "Servidor3104";
