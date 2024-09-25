@@ -8,7 +8,7 @@ const int porta = 600;
 const IPAddress ip_servidor(192, 168, 4, 1);
 String resposta_servidor;
 unsigned long int tempo = 0;
-unsigned long int intervalo = 6000;  // Intervalo de 6 segundos
+unsigned long int intervalo = 4000;  // Intervalo de 6 segundos
 
 void setup() 
 {
