@@ -1,0 +1,154 @@
+/* Reseta estilos padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos do corpo */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-image: url('tz.jpg'); /* Imagem de fundo */
+  background-size: cover; /* Ajusta a imagem para cobrir todo o fundo */
+  background-position: center; /* Centraliza a imagem */
+  color: #e4d4d4; /* Cor do texto */
+}
+
+/* Estilos do título principal */
+h1 {
+  font-size: 3em;
+  background: linear-gradient(to right, #d1360f, #88430f); /* Gradiente de fundo */
+  -webkit-background-clip: text; /* Clip de fundo para texto */
+  -webkit-text-fill-color: transparent; /* Texto transparente para gradiente */
+  font-family: 'Oswald', sans-serif; /* Fonte do título */
+  border-bottom: 4px solid #e67e22; /* Borda inferior */
+  padding-bottom: 10px;
+}
+
+/* Estilos dos parágrafos */
+p {
+  font-size: 20px; /* Tamanho da fonte do parágrafo */
+  font-style: oblique; /* Estilo oblíquo para um toque dinâmico */
+  color: #f4efef; /* Cor do texto */
+  line-height: 1.9; /* Aumenta o espaçamento entre as linhas */
+  margin: 20px 0; /* Espaço acima e abaixo do parágrafo */
+  font-family: 'Roboto', sans-serif; /* Fonte do parágrafo */
+}
+
+/* Estilos dos subtítulos */
+h2 {
+  font-size: 2em;
+  color: white; /* Cor do texto */
+  background-color: #cc782e; /* Cor de fundo */
+  padding: 10px; /* Espaçamento interno */
+  border-radius: 5px; /* Cantos arredondados */
+  font-family: 'Oswald', sans-serif; /* Fonte do subtítulo */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Estilos para o artigo */
+article {
+  margin-top: 20px; /* Espaço acima do artigo */
+}
+
+/* Estilos do subtítulo h3 */
+h3 {
+  color: white; /* Cor do texto */
+  font-size: 2em; /* Tamanho da fonte */
+  font-family: 'Oswald', sans-serif; /* Fonte criativa */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para dar destaque */
+  margin: 20px 0; /* Margem acima e abaixo do subtítulo */
+}
+
+/* Estilos das listas */
+ul {
+  font-size: larger; /* Tamanho da fonte das listas */
+  color: white; /* Cor do texto */
+}
+
+/* Estilo do wrapper */
+#wrapper {
+  max-width: 1300px; /* Largura máxima */
+  margin: 0 auto; /* Centraliza o wrapper */
+  padding: 10px; /* Preenchimento interno */
+  background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+  border-radius: 10px; /* Cantos arredondados */
+}
+
+/* Estilo do header */
+#header {
+  padding: 20px; /* Preenchimento interno do header */
+  text-align: center; /* Centraliza o conteúdo do header */
+}
+
+/* Estilos para os LEDs */
+.led-status {
+  list-style: none; /* Remove marcadores da lista */
+  padding: 0; /* Remove preenchimento */
+  display: flex; /* Usa flexbox */
+  justify-content: center; /* Centraliza os LEDs */
+}
+
+.led-status li {
+  display: flex; /* Usa flexbox para os itens */
+  align-items: center; /* Centraliza verticalmente os itens */
+  margin: 0 20px; /* Espaço entre os LEDs */
+}
+
+.led {
+  width: 70px; /* Largura do LED */
+  height: 70px; /* Altura do LED */
+  border-radius: 50%; /* Forma redonda */
+  opacity: 0.5; /* Opacidade padrão */
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s; /* Transição suave para a opacidade e transformações */
+}
+
+/* Efeito visual quando o LED está ativo */
+.led.active
+{ 
+  opacity: 1; /* Opacidade total quando ativo */
+  transform: scale(1.1); /* Aumenta o tamanho do LED */
+  box-shadow: 0 0 20px 10px rgba(38, 9, 168, 0.8); /* Efeito de brilho ao redor do LED */
+}
+
+/* Cores dos LEDs */
+.led.red {
+  background-color: red; /* LED vermelho */
+}
+
+.led.green {
+  background-color: green; /* LED verde */
+}
+
+.led.yellow {
+  background-color: yellow; /* LED amarelo */
+}
+
+/* Estilo do footer */
+#footer {
+  text-align: center; /* Centraliza o texto no footer */
+  margin-top: 10px; /* Espaço acima do footer */
+}
+
+/* Estilo dos links de navegação */
+nav ul {
+  list-style: none; /* Remove marcadores da lista */
+  display: flex; /* Usa flexbox */
+  justify-content: center; /* Centraliza os links */
+  padding: 10px 0; /* Preenchimento */
+}
+
+nav ul li {
+  margin: 0 10px; /* Espaço entre os links */
+}
+
+/* Estilo dos links */
+nav ul li a {
+  color: #fff; /* Cor dos links */
+  text-decoration: none; /* Remove sublinhado */
+}
+
+nav ul li a:hover {
+  text-decoration: underline; /* Sublinha ao passar o mouse */
+}
