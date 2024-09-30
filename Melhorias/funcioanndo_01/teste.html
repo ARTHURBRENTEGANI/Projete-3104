@@ -17,52 +17,65 @@
         let ledGreenChart, ledRedChart, ledYellowChart; // Declaração das variáveis dos gráficos
 
         async function updateLEDStatus() {
-            try {
-                const resposta = await fetch('http://192.168.4.4/estado_led.php');
-                const resposta_j = await resposta.json();
+    try {
+        const resposta = await fetch('http://192.168.4.4/estado_led.php');
+        const resposta_j = await resposta.json();
 
-                console.log('Resposta do servidor:', resposta);
-                console.log('Dados recebidos:', resposta_j);
+        console.log('Resposta do servidor:', resposta);
+        console.log('Dados recebidos:', resposta_j);
 
-                const red = Number(resposta_j.red);
-                const green = Number(resposta_j.green);
-                const yellow = Number(resposta_j.yellow);
+        const red = Number(resposta_j.red);
+        const green = Number(resposta_j.green);
+        const yellow = Number(resposta_j.yellow);
 
-                console.log('Estado do LED Vermelho:', red);
-                console.log('Estado do LED Verde:', green);
-                console.log('Estado do LED Amarelo:', yellow);
+        console.log('Estado do LED Vermelho:', red);
+        console.log('Estado do LED Verde:', green);
+        console.log('Estado do LED Amarelo:', yellow);
 
-                document.querySelector('.led.red').classList.toggle('active', red === 0);
-                document.querySelector('.led.green').classList.toggle('active', green === 0);
-                document.querySelector('.led.yellow').classList.toggle('active', yellow === 0);
-                
-                // Verifica se o LED verde está ativado (0)
-                if (green === 0) {
-                    greenActivationCount++; // Incrementa o contador
-                    const currentTime = new Date().toLocaleTimeString(); // Obtém o tempo atual
-                    labels.push(currentTime); // Adiciona o tempo ao eixo do tempo
-                    greenDataCounts.push(greenActivationCount); // Adiciona o contador ao eixo da quantidade do LED verde
-                    updateGreenChart(); // Atualiza o gráfico do LED verde
-                }
-
-                // Verifica se o LED vermelho está ativado (0)
-                if (red === 0) {
-                    redActivationCount++; // Incrementa o contador
-                    redDataCounts.push(redActivationCount); // Adiciona o contador ao eixo da quantidade do LED vermelho
-                    updateRedChart(); // Atualiza o gráfico do LED vermelho
-                }
-
-                // Verifica se o LED amarelo está ativado (0)
-                if (yellow === 0) {
-                    yellowActivationCount++; // Incrementa o contador
-                    yellowDataCounts.push(yellowActivationCount); // Adiciona o contador ao eixo da quantidade do LED amarelo
-                    updateYellowChart(); // Atualiza o gráfico do LED amarelo
-                }
-
-            } catch (error) {
-                console.error('Erro ao buscar o estado dos LEDs:', error);
-            }
+        document.querySelector('.led.red').classList.toggle('active', red === 0);
+        document.querySelector('.led.green').classList.toggle('active', green === 0);
+        document.querySelector('.led.yellow').classList.toggle('active', yellow === 0);
+        
+        // Verifica se o LED verde está ativado (0)
+        if (green === 0) {
+            greenActivationCount++; // Incrementa o contador
+            const currentTime = new Date().toLocaleTimeString(); // Obtém o tempo atual
+            labels.push(currentTime); // Adiciona o tempo ao eixo do tempo
+            greenDataCounts.push(greenActivationCount); // Adiciona o contador ao eixo da quantidade do LED verde
+            updateGreenChart(); // Atualiza o gráfico do LED verde
+        } else if (greenActivationCount > 0) { // Se o LED verde está desativado e o contador é maior que 0
+            greenActivationCount--; // Decrementa o contador
+            greenDataCounts.push(greenActivationCount); // Adiciona o contador ao eixo da quantidade do LED verde
+            updateGreenChart(); // Atualiza o gráfico do LED verde
         }
+
+        // Verifica se o LED vermelho está ativado (0)
+        if (red === 0) {
+            redActivationCount++; // Incrementa o contador
+            redDataCounts.push(redActivationCount); // Adiciona o contador ao eixo da quantidade do LED vermelho
+            updateRedChart(); // Atualiza o gráfico do LED vermelho
+        } else if (redActivationCount > 0) { // Se o LED vermelho está desativado e o contador é maior que 0
+            redActivationCount--; // Decrementa o contador
+            redDataCounts.push(redActivationCount); // Adiciona o contador ao eixo da quantidade do LED vermelho
+            updateRedChart(); // Atualiza o gráfico do LED vermelho
+        }
+
+        // Verifica se o LED amarelo está ativado (0)
+        if (yellow === 0) {
+            yellowActivationCount++; // Incrementa o contador
+            yellowDataCounts.push(yellowActivationCount); // Adiciona o contador ao eixo da quantidade do LED amarelo
+            updateYellowChart(); // Atualiza o gráfico do LED amarelo
+        } else if (yellowActivationCount > 0) { // Se o LED amarelo está desativado e o contador é maior que 0
+            yellowActivationCount--; // Decrementa o contador
+            yellowDataCounts.push(yellowActivationCount); // Adiciona o contador ao eixo da quantidade do LED amarelo
+            updateYellowChart(); // Atualiza o gráfico do LED amarelo
+        }
+
+    } catch (error) {
+        console.error('Erro ao buscar o estado dos LEDs:', error);
+    }
+}
+
 
         function initCharts() {
             const ctxGreen = document.getElementById('ledGreenChart').getContext('2d');
