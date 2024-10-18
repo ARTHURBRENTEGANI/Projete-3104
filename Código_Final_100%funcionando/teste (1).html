@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>SST - Sistema de Segurança do Trabalho</title>
+    <link rel="stylesheet" href="teste.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let greenActivationCount = 0; // Contador para ativações do LED verde
+        let redActivationCount = 0; // Contador para ativações do LED vermelho
+        let yellowActivationCount = 0; // Contador para ativações do LED amarelo
+        const labels = []; // Eixo do tempo
+        const greenDataCounts = []; // Eixo da quantidade de ativações do LED verde
+        const redDataCounts = []; // Eixo da quantidade de ativações do LED vermelho
+        const yellowDataCounts = []; // Eixo da quantidade de ativações do LED amarelo
+        let ledGreenChart, ledRedChart, ledYellowChart; // Declaração das variáveis dos gráficos
+
+        async function updateLEDStatus() {
+    try {
+        const resposta = await fetch('http://192.168.4.4/estado_led.php');
+        const resposta_j = await resposta.json();
+
+        console.log('Resposta do servidor:', resposta);
+        console.log('Dados recebidos:', resposta_j);
+
+        const red = Number(resposta_j.red);
+        const green = Number(resposta_j.green);
+        const yellow = Number(resposta_j.yellow);
+
+        console.log('Estado do LED Vermelho:', red);
+        console.log('Estado do LED Verde:', green);
+        console.log('Estado do LED Amarelo:', yellow);
+
+        document.querySelector('.led.red').classList.toggle('active', red === 0);
+        document.querySelector('.led.green').classList.toggle('active', green === 0);
+        document.querySelector('.led.yellow').classList.toggle('active', yellow === 0);
+        
+        // Verifica se o LED verde está ativado (0)
+        if (green === 0) {
+            greenActivationCount++; // Incrementa o contador
+            const currentTime = new Date().toLocaleTimeString(); // Obtém o tempo atual
+            labels.push(currentTime); // Adiciona o tempo ao eixo do tempo
+            greenDataCounts.push(greenActivationCount); // Adiciona o contador ao eixo da quantidade do LED verde
+            updateGreenChart(); // Atualiza o gráfico do LED verde
+        } else if (greenActivationCount > 0) { // Se o LED verde está desativado e o contador é maior que 0
+            greenActivationCount--; // Decrementa o contador
+            greenDataCounts.push(greenActivationCount); // Adiciona o contador ao eixo da quantidade do LED verde
+            updateGreenChart(); // Atualiza o gráfico do LED verde
+        }
+
+        // Verifica se o LED vermelho está ativado (0)
+        if (red === 0) {
+            redActivationCount++; // Incrementa o contador
+            redDataCounts.push(redActivationCount); // Adiciona o contador ao eixo da quantidade do LED vermelho
+            updateRedChart(); // Atualiza o gráfico do LED vermelho
+        } else if (redActivationCount > 0) { // Se o LED vermelho está desativado e o contador é maior que 0
+            redActivationCount--; // Decrementa o contador
+            redDataCounts.push(redActivationCount); // Adiciona o contador ao eixo da quantidade do LED vermelho
+            updateRedChart(); // Atualiza o gráfico do LED vermelho
+        }
+
+        // Verifica se o LED amarelo está ativado (0)
+        if (yellow === 0) {
+            yellowActivationCount++; // Incrementa o contador
+            yellowDataCounts.push(yellowActivationCount); // Adiciona o contador ao eixo da quantidade do LED amarelo
+            updateYellowChart(); // Atualiza o gráfico do LED amarelo
+        } else if (yellowActivationCount > 0) { // Se o LED amarelo está desativado e o contador é maior que 0
+            yellowActivationCount--; // Decrementa o contador
+            yellowDataCounts.push(yellowActivationCount); // Adiciona o contador ao eixo da quantidade do LED amarelo
+            updateYellowChart(); // Atualiza o gráfico do LED amarelo
+        }
+
+    } catch (error) {
+        console.error('Erro ao buscar o estado dos LEDs:', error);
+    }
+}
+
+
+        function initCharts() {
+            const ctxGreen = document.getElementById('ledGreenChart').getContext('2d');
+            ledGreenChart = new Chart(ctxGreen, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ativações do LED Verde',
+                        data: greenDataCounts,
+                        borderColor: 'green',
+                        backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Quantidade de Ativações'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctxRed = document.getElementById('ledRedChart').getContext('2d');
+            ledRedChart = new Chart(ctxRed, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ativações do LED Vermelho',
+                        data: redDataCounts,
+                        borderColor: 'red',
+                        backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Quantidade de Ativações'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctxYellow = document.getElementById('ledYellowChart').getContext('2d');
+            ledYellowChart = new Chart(ctxYellow, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ativações do LED Amarelo',
+                        data: yellowDataCounts,
+                        borderColor: 'yellow',
+                        backgroundColor: 'rgba(255, 255, 0, 0.2)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Quantidade de Ativações'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateGreenChart() {
+            ledGreenChart.update(); // Atualiza o gráfico do LED verde
+        }
+
+        function updateRedChart() {
+            ledRedChart.update(); // Atualiza o gráfico do LED vermelho
+        }
+
+        function updateYellowChart() {
+            ledYellowChart.update(); // Atualiza o gráfico do LED amarelo
+        }
+
+        window.onload = function () {
+            initCharts(); // Inicializa os gráficos ao carregar a página
+            updateLEDStatus(); // Chama a função para atualizar o estado dos LEDs
+            setInterval(updateLEDStatus, 5000); // Atualiza a cada 5 segundos
+        };
+    </script>
+</head>
+<body class="is-preload">
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <div class="logo">
+                <span class="icon fa-shield-alt"></span>
+            </div>
+            <div class="content">
+                <div class="inner">
+                    <h1>SST - Sistema de Segurança do Trabalho</h1>
+                    <p>Monitoramento de segurança com sinalização de LEDs baseado em cores das normas regulamentadoras.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <div id="main">
+
+            <!-- Estado dos LEDs -->
+            <article id="led-status">
+                <h2 class="major">Estado dos LEDs</h2>
+                <p>Os LEDs abaixo indicam o estado atual do sistema:</p>
+                <ul class="led-status">
+                    <li>
+                        <span class="led red"></span>
+                        <strong>LED Vermelho:</strong> Risco de incêndio
+                    </li>
+                    <li>
+                        <span class="led green"></span>
+                        <strong>LED Verde:</strong> Risco físico
+                    </li>
+                    <li>
+                        <span class="led yellow"></span>
+                        <strong>LED Amarelo:</strong> Risco ergonômico
+                    </li>
+                </ul>
+
+                <h3 class="major">Gráfico do LED Verde</h3>
+                <canvas id="ledGreenChart" width="400" height="200"></canvas> <!-- Canvas para o gráfico do LED verde -->
+                
+                <h3 class="major">Gráfico do LED Vermelho</h3>
+                <canvas id="ledRedChart" width="400" height="200"></canvas> <!-- Canvas para o gráfico do LED vermelho -->
+                
+                <h3 class="major">Gráfico do LED Amarelo</h3>
+                <canvas id="ledYellowChart" width="400" height="200"></canvas> <!-- Canvas para o gráfico do LED amarelo -->
+            </article>
+   
+            <article id="sensors">
+                <h3 class="major">Sensores</h3>
+                <ul>
+                    <li><strong>Sensor de Carbono:</strong> Detecta níveis de CO₂.</li>
+                    <li><strong>Sensor de Ruído:</strong> Monitora níveis de ruído ambiental.</li>
+                    <li><strong>Câmera com IA:</strong> Detecta posturas irregulares.</li>
+                </ul>
+            </article>
+
+            <!-- Sobre -->
+            <article id="about">
+                <h3 class="major">Sobre o Projeto</h3>
+                <p>O Sistema de Segurança do Trabalho (SST) é um projeto que visa a proteção e a segurança dos trabalhadores, utilizando tecnologia para monitorar e alertar sobre riscos no ambiente de trabalho.</p>
+            </article>
+
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+            </ul>
+        </footer>
+
+    </div>
+</body>
+</html>

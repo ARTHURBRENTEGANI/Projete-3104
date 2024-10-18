@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-image: url('tz.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #e4d4d4;
+}
+
+h1 {
+  font-size: 3em;
+  background: linear-gradient(to right, #d1360f, #88430f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Oswald', sans-serif;
+  border-bottom: 4px solid #e67e22;
+  padding-bottom: 10px;
+}
+
+p {
+  font-size: 20px;
+  font-style: oblique;
+  color: #f4efef;
+  line-height: 1.9;
+  margin: 20px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  font-size: 2em;
+  color: white;
+  background-color: #cc782e;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: 'Oswald', sans-serif;
+  text-align: center;
+}
+
+article {
+  margin-top: 20px;
+}
+
+h3 {
+  color: white;
+  font-size: 2em;
+  font-family: 'Oswald', sans-serif;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin: 20px 0;
+}
+
+ul {
+  font-size: larger;
+  color: white;
+}
+
+#wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#header {
+  padding: 20px;
+  text-align: center;
+}
+
+.led-status {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.led-status li {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.led {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.led.active { 
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px 10px rgba(250, 250, 250, 0.8);
+}
+
+.led.red {
+  background-color: red;
+  margin: 20px;
+  opacity: 1;
+}
+
+.led.green {
+  background-color: green;
+  margin: 20px; 
+  opacity: 1;
+}
+
+.led.yellow {
+  background-color: yellow;
+  margin: 20px;
+  opacity: 1;
+}
+
+#footer {
+  text-align: center;
+  padding: 10px;
+}
